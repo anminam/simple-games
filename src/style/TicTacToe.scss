@@ -1,0 +1,15 @@
+
+$td-width: 100px;
+
+.TicTacToe {
+    table {
+        border: 2px black solid;
+
+        td {
+            border: 2px black solid;
+            width: $td-width;
+            height: $td-width;
+        }
+    }
+
+}

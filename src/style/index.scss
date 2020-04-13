@@ -1,5 +1,6 @@
 @import './reset.css';
 @import './Font.scss';
+@import './TicTacToe.scss';
 
 
 html,body {
@@ -7,10 +8,27 @@ html,body {
     width: 100%;
 }
 body {
-    
+ font-size: 16px;
+ line-height: 1.5;   
 }
 
 * {
   box-sizing: border-box;
   outline: none;
+}
+
+.App-header {
+  display: flex;
+  align-items: center;
+
+  .title {
+    padding: 10px 20px;
+  }
+}
+.nav-list {
+  display: flex;
+
+  li {
+    margin: 0 10px;
+  }
 }
