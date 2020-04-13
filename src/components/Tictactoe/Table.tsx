@@ -15,7 +15,7 @@ const Table = ({onClick, tableData, dispatch}:ITable) => {
 
             </thead>
             <tbody>
-                {Array(tableData.length).fill('').map((item, i) => <Tr rowIndex={i} rowData={tableData[i]} dispatch={dispatch} />)}
+                {Array(tableData.length).fill('').map((item, i) => <Tr key={i} rowIndex={i} rowData={tableData[i]} dispatch={dispatch} />)}
             </tbody>
         </table>
     )

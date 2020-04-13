@@ -14,6 +14,7 @@ const initialState:IInitState = {
 }
 export const SET_WINNER = 'SET_WINNER' as const;
 export const CLICK_CELL = 'CLICK_CELL' as const;
+export const CHANGE_TURN = 'CHANGE_TURN' as const;
 
 export const setWinner = () => {
     return {
@@ -30,17 +31,17 @@ export const clickCell = (row:number, cell:number) => {
     }
 }
 
-// export const clickCell = (row:number, cell:number) => {
-//     return {
-//         type: CLICK_CELL,
-//         row: row,
-//         cell: cell
-//     }
-// }
+export const changeTurn = (turn: string) => {
+    return {
+        type: CHANGE_TURN,
+        turn: turn
+    }
+}
 
 export type IAction = 
     ReturnType<typeof setWinner> |
-    ReturnType<typeof clickCell>
+    ReturnType<typeof clickCell> |
+    ReturnType<typeof changeTurn>
 ;
 
 const reducer = (state: IInitState, action: IAction) => {
@@ -58,6 +59,11 @@ const reducer = (state: IInitState, action: IAction) => {
                 ...state,
                 tableData
             }
+        case CHANGE_TURN:
+            return {
+                ...state,
+                turn: state.turn === 'O' ? "X" : "O"
+            }
         default:
             return state;
     }
@@ -65,10 +71,6 @@ const reducer = (state: IInitState, action: IAction) => {
 const Tictactoe = () => {
 
     const [state, dispatch] = useReducer(reducer, initialState);
-
-    const [winner, setWinner] = useState<string>('');
-    const [turn, setTurn] = useState<string>('O');
-    const [tableData, setTableData] = useState([['','',''],['','',''],['','','']]);
 
     const onClickTable = useCallback(()=> {
         dispatch({type:SET_WINNER, payload: '0'})
