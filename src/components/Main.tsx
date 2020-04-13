@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Tictactoe from './Tictactoe';
 import Googoodan from './Googoodan';
 

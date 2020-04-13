@@ -1,6 +1,5 @@
-import React, { useState, useReducer, useCallback } from 'react';
+import React, { useReducer, useCallback } from 'react';
 import Table from './Table';
-import { stringify } from 'querystring';
 
 type IInitState = {
     winner: string;
@@ -10,7 +9,11 @@ type IInitState = {
 const initialState:IInitState = {
     winner: '',
     turn: 'O',
-    tableData: [['', '', '',],['', '', '',],['', '', '',]]
+    tableData: [
+        ['', '', '',],
+        ['', '', '',],
+        ['', '', '',]
+    ]
 }
 export const SET_WINNER = 'SET_WINNER' as const;
 export const CLICK_CELL = 'CLICK_CELL' as const;
@@ -31,10 +34,9 @@ export const clickCell = (row:number, cell:number) => {
     }
 }
 
-export const changeTurn = (turn: string) => {
+export const changeTurn = () => {
     return {
-        type: CHANGE_TURN,
-        turn: turn
+        type: CHANGE_TURN
     }
 }
 
@@ -45,6 +47,7 @@ export type IAction =
 ;
 
 const reducer = (state: IInitState, action: IAction) => {
+    
     switch(action.type) {
         case SET_WINNER:
             return {

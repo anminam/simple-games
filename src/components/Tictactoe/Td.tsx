@@ -11,11 +11,15 @@ export interface ITd {
 const Td = ({rowIndex, cellIndex, dispatch, cellData }: ITd) => {
 
     const onClickTd = useCallback ( () => {
-        console.log('onClickTd');
+        console.log('onClickTd', cellData);
+        if (cellData) {
+            return;
+        }
+        
         dispatch(clickCell(rowIndex,cellIndex));
-        dispatch(changeTurn);
+        dispatch(changeTurn());
 
-    }, [])
+    }, [cellData])
 
     return (
         <td onClick={onClickTd}>{cellData}</td>

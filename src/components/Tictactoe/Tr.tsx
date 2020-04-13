@@ -11,7 +11,9 @@ const Tr = ({rowIndex, rowData, dispatch}:ITr) => {
 
     return (
         <tr>
-            {rowData.fill('').map((item, i) => <Td key={i} rowIndex={rowIndex} cellIndex={i} dispatch={dispatch} cellData={rowData[i]}/>)}
+            {
+                rowData.map((item, i) => <Td key={i} rowIndex={rowIndex} cellIndex={i} dispatch={dispatch} cellData={item}/>)
+            }
         </tr>
     )
 }
