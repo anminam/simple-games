@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/simple-games/static/css/main.6ad97926.chunk.css",
-    "main.js": "/simple-games/static/js/main.1b46f4ee.chunk.js",
-    "main.js.map": "/simple-games/static/js/main.1b46f4ee.chunk.js.map",
+    "main.css": "/simple-games/static/css/main.21010b5a.chunk.css",
+    "main.js": "/simple-games/static/js/main.f3e3f439.chunk.js",
+    "main.js.map": "/simple-games/static/js/main.f3e3f439.chunk.js.map",
     "runtime-main.js": "/simple-games/static/js/runtime-main.c70a05bb.js",
     "runtime-main.js.map": "/simple-games/static/js/runtime-main.c70a05bb.js.map",
-    "static/js/2.5e4f19be.chunk.js": "/simple-games/static/js/2.5e4f19be.chunk.js",
-    "static/js/2.5e4f19be.chunk.js.map": "/simple-games/static/js/2.5e4f19be.chunk.js.map",
+    "static/js/2.3ac1cc16.chunk.js": "/simple-games/static/js/2.3ac1cc16.chunk.js",
+    "static/js/2.3ac1cc16.chunk.js.map": "/simple-games/static/js/2.3ac1cc16.chunk.js.map",
     "index.html": "/simple-games/index.html",
-    "precache-manifest.6d0d581c66c0792e85379748130d9da6.js": "/simple-games/precache-manifest.6d0d581c66c0792e85379748130d9da6.js",
+    "precache-manifest.264231c786cba308c39849c476b736bf.js": "/simple-games/precache-manifest.264231c786cba308c39849c476b736bf.js",
     "service-worker.js": "/simple-games/service-worker.js",
-    "static/css/main.6ad97926.chunk.css.map": "/simple-games/static/css/main.6ad97926.chunk.css.map",
-    "static/js/2.5e4f19be.chunk.js.LICENSE.txt": "/simple-games/static/js/2.5e4f19be.chunk.js.LICENSE.txt"
+    "static/css/main.21010b5a.chunk.css.map": "/simple-games/static/css/main.21010b5a.chunk.css.map",
+    "static/js/2.3ac1cc16.chunk.js.LICENSE.txt": "/simple-games/static/js/2.3ac1cc16.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c70a05bb.js",
-    "static/js/2.5e4f19be.chunk.js",
-    "static/css/main.6ad97926.chunk.css",
-    "static/js/main.1b46f4ee.chunk.js"
+    "static/js/2.3ac1cc16.chunk.js",
+    "static/css/main.21010b5a.chunk.css",
+    "static/js/main.f3e3f439.chunk.js"
   ]
 }
