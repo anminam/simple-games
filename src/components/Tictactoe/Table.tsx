@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, memo } from 'react';
 import { IAction }from './index';
 import Tr from './Tr';
 
@@ -7,10 +7,10 @@ interface ITable {
     tableData: string[][]
     dispatch: Dispatch<IAction>
 }
-const Table = ({onClick, tableData, dispatch}:ITable) => {
+const Table = memo(({onClick, tableData, dispatch}:ITable) => {
 
     return (
-        <table onClick={onClick}>
+        <table>
             <thead>
 
             </thead>
@@ -21,6 +21,6 @@ const Table = ({onClick, tableData, dispatch}:ITable) => {
             </tbody>
         </table>
     )
-}
+});
 
 export default Table;
