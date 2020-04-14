@@ -1,0 +1,20 @@
+
+$td-width: 40px;
+$font-size: 20px;
+
+.Mine {
+    table {
+        border: 2px black solid;
+
+        td {
+            border: 2px black solid;
+            width: $td-width;
+            height: $td-width;
+            text-align: center;
+            vertical-align: middle;
+            font-size: $font-size;
+            font-weight: bold;
+        }
+    }
+
+}
