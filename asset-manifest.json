@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/simple-games/static/css/main.c161295b.chunk.css",
-    "main.js": "/simple-games/static/js/main.917ea423.chunk.js",
-    "main.js.map": "/simple-games/static/js/main.917ea423.chunk.js.map",
+    "main.js": "/simple-games/static/js/main.0fe0316a.chunk.js",
+    "main.js.map": "/simple-games/static/js/main.0fe0316a.chunk.js.map",
     "runtime-main.js": "/simple-games/static/js/runtime-main.c70a05bb.js",
     "runtime-main.js.map": "/simple-games/static/js/runtime-main.c70a05bb.js.map",
-    "static/js/2.3ac1cc16.chunk.js": "/simple-games/static/js/2.3ac1cc16.chunk.js",
-    "static/js/2.3ac1cc16.chunk.js.map": "/simple-games/static/js/2.3ac1cc16.chunk.js.map",
+    "static/js/2.a6974efe.chunk.js": "/simple-games/static/js/2.a6974efe.chunk.js",
+    "static/js/2.a6974efe.chunk.js.map": "/simple-games/static/js/2.a6974efe.chunk.js.map",
     "index.html": "/simple-games/index.html",
-    "precache-manifest.f587bef97b9cbaceb4e431b88c21b216.js": "/simple-games/precache-manifest.f587bef97b9cbaceb4e431b88c21b216.js",
+    "precache-manifest.34eab5ee28dc8d423e4c08df16ea98c7.js": "/simple-games/precache-manifest.34eab5ee28dc8d423e4c08df16ea98c7.js",
     "service-worker.js": "/simple-games/service-worker.js",
     "static/css/main.c161295b.chunk.css.map": "/simple-games/static/css/main.c161295b.chunk.css.map",
-    "static/js/2.3ac1cc16.chunk.js.LICENSE.txt": "/simple-games/static/js/2.3ac1cc16.chunk.js.LICENSE.txt"
+    "static/js/2.a6974efe.chunk.js.LICENSE.txt": "/simple-games/static/js/2.a6974efe.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c70a05bb.js",
-    "static/js/2.3ac1cc16.chunk.js",
+    "static/js/2.a6974efe.chunk.js",
     "static/css/main.c161295b.chunk.css",
-    "static/js/main.917ea423.chunk.js"
+    "static/js/main.0fe0316a.chunk.js"
   ]
 }
