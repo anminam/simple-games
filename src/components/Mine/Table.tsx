@@ -11,7 +11,7 @@ const Table = () => {
                 <thead></thead>
                 <tbody>
                     {
-                        tableData.map((item, i) => ( <Tr key={i} items={item}/> ))
+                        tableData.map((item, i) => ( <Tr key={i} items={item} rowIndex={i}/> ))
                     }
                 </tbody>
             </table>

@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Td from './Td';
+import { TableContext } from '.';
 
 interface ITr {
     items: number[]
+    rowIndex: number
 }
-const Tr = ({items}:ITr) => {
+const Tr = ({ items, rowIndex }: ITr) => {
+    const {tableData} = useContext(TableContext);
 
-    return(
+    return (
         <tr className="Tr">
             {
-                items.map((item, i) => <Td key={i} item={item} /> )
+                items.map((item, i) => <Td key={i} item={item} rowIndex={rowIndex} cellIndex={i}/> )
             }
         </tr>
     )

@@ -59,6 +59,8 @@ const initialState:IState = {
 }
 
 export const START_GAME = 'START_GAME' as const;
+export const OPEN_CELL = 'OPEN_CELL' as const;
+
 export const startGame = ({row, cell, mine}: IStartMine) => (
   {
     type: START_GAME,
@@ -68,8 +70,17 @@ export const startGame = ({row, cell, mine}: IStartMine) => (
   }
 )
 
+export const openCell = (row:number, cell:number) => {
+  return {
+    type: OPEN_CELL,
+    row,
+    cell
+  }
+}
+
 type IAction = 
-  ReturnType<typeof startGame>
+  ReturnType<typeof startGame> |
+  ReturnType<typeof openCell>
 ;
 
 const reducer = (state:IState, action:IAction) => {
@@ -84,6 +95,14 @@ const reducer = (state:IState, action:IAction) => {
         ...state,
         tableData: planMine(obj)
       }
+    case OPEN_CELL:
+        const tableData = [...state.tableData];
+        tableData[action.row] = [...state.tableData[action.row]];
+        tableData[action.row][action.cell] = CODE.OPENED
+        return {
+          ...state,
+          tableData
+        }
     default:
       return state;
   }
