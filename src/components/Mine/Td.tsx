@@ -50,7 +50,7 @@ const getTdText = (code: CODE) => {
         case CODE.QUESTION:
             return '?';
         default: 
-            return '';
+            return code || '';
     }
 }
 const Td = ({ item, rowIndex, cellIndex }:ITd) => {

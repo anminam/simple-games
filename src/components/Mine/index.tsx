@@ -3,7 +3,7 @@ import Table from './Table';
 import Form from './Form';
 
 export enum CODE {
-  MINE,
+  MINE = -10,
   NORMAL,
   QUESTION,
   FLAG,
@@ -77,7 +77,6 @@ export const startGame = ({row, cell, mine}: IStartMine) => (
 )
 
 export const clickMine = (row:number, cell:number) => {
-  debugger;
   return {
     type: CLICK_MINE,
     row,
@@ -124,6 +123,7 @@ type IAction =
 ;
 
 const reducer = (state:IState, action:IAction) => {
+
   let tableData = null;
   switch (action.type) {
     case START_GAME:
@@ -139,7 +139,34 @@ const reducer = (state:IState, action:IAction) => {
     case OPEN_CELL:
       tableData = [...state.tableData];
       tableData[action.row] = [...state.tableData[action.row]];
-      tableData[action.row][action.cell] = CODE.OPENED
+      
+
+      let around:number[] = []
+
+      if (tableData[action.row-1]) {
+        around = around.concat(
+          tableData[action.row - 1][action.cell - 1],
+          tableData[action.row - 1][action.cell],
+          tableData[action.row - 1][action.cell + 1],
+        )
+      }
+
+      around = around.concat(
+        tableData[action.row][action.cell - 1],
+        tableData[action.row][action.cell + 1]
+      )
+
+      if (tableData[action.row + 1]) {
+        around = around.concat(
+          tableData[action.row + 1][action.cell - 1],
+          tableData[action.row + 1][action.cell],
+          tableData[action.row + 1][action.cell + 1],
+        )
+      }
+      const count = around.filter(v => [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v)).length;
+      tableData[action.row][action.cell] = count;
+      console.log(count);
+
       return {
         ...state,
         tableData
@@ -208,7 +235,6 @@ export const TableContext = createContext<ITableContext>({
 })
 
 const Mine = () => {
-  
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const value = useMemo( () => ({
