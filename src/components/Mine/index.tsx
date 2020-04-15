@@ -134,6 +134,7 @@ const reducer = (state:IState, action:IAction) => {
       }
       return {
         ...state,
+        halted: false,
         tableData: planMine(obj)
       }
     case OPEN_CELL:
@@ -252,10 +253,11 @@ const Mine = () => {
           state.tableData.length > 0 &&
           <Table />
         }
+        {
+          state.tableData.length > 0 &&
+          <div>{state.halted ? "끝": "진행중.."}</div>
+        }
         
-        <div>{state.timer}</div>
-
-
       </div>
     </TableContext.Provider>
   )
