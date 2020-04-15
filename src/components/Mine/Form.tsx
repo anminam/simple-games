@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { TableContext, startGame } from '.';
 
 const Form = () => {
@@ -20,6 +20,13 @@ const Form = () => {
     const onClickButon = useCallback(() => {
         dispatch(startGame({row,cell,mine}));
     }, [row, cell, mine]);
+
+    useEffect(() => {
+        setRow(10)
+        setCell(10)
+        setMine(10)
+        dispatch(startGame({row,cell,mine}));
+    }, [])
     
 
 

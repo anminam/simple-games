@@ -48,18 +48,24 @@ const planMine = ({row, cell, mine}: IStartMine):number[][] => {
 
 interface IState {
   tableData: number[][]
-  timer: string,
+  timer: string
   result: string
+  halted: boolean
 
 }
 const initialState:IState = {
   tableData: [[]],
   timer: '',
-  result: ''
+  result: '',
+  halted: false
 }
 
 export const START_GAME = 'START_GAME' as const;
+export const CLICK_MINE = 'CLICK_MINE' as const;
+export const NORMAL_CELL = 'NORMAL_CELL' as const;
 export const OPEN_CELL = 'OPEN_CELL' as const;
+export const FLAG_CELL = 'FLAG_CELL' as const;
+export const QUESTION_CELL = 'QUESTION_CELL' as const;
 
 export const startGame = ({row, cell, mine}: IStartMine) => (
   {
@@ -70,6 +76,15 @@ export const startGame = ({row, cell, mine}: IStartMine) => (
   }
 )
 
+export const clickMine = (row:number, cell:number) => {
+  debugger;
+  return {
+    type: CLICK_MINE,
+    row,
+    cell
+  }
+}
+
 export const openCell = (row:number, cell:number) => {
   return {
     type: OPEN_CELL,
@@ -77,13 +92,39 @@ export const openCell = (row:number, cell:number) => {
     cell
   }
 }
+export const normalCell = (row:number, cell:number) => {
+  return {
+    type: NORMAL_CELL,
+    row,
+    cell
+  }
+}
+export const flagCell = (row:number, cell:number) => {
+  return {
+    type: FLAG_CELL,
+    row,
+    cell
+  }
+}
+export const questionCell = (row:number, cell:number) => {
+  return {
+    type: QUESTION_CELL,
+    row,
+    cell
+  }
+}
 
 type IAction = 
   ReturnType<typeof startGame> |
-  ReturnType<typeof openCell>
+  ReturnType<typeof clickMine> |
+  ReturnType<typeof openCell> |
+  ReturnType<typeof normalCell> |
+  ReturnType<typeof flagCell> |
+  ReturnType<typeof questionCell>
 ;
 
 const reducer = (state:IState, action:IAction) => {
+  let tableData = null;
   switch (action.type) {
     case START_GAME:
       const obj = {
@@ -96,13 +137,59 @@ const reducer = (state:IState, action:IAction) => {
         tableData: planMine(obj)
       }
     case OPEN_CELL:
-        const tableData = [...state.tableData];
-        tableData[action.row] = [...state.tableData[action.row]];
-        tableData[action.row][action.cell] = CODE.OPENED
-        return {
-          ...state,
-          tableData
-        }
+      tableData = [...state.tableData];
+      tableData[action.row] = [...state.tableData[action.row]];
+      tableData[action.row][action.cell] = CODE.OPENED
+      return {
+        ...state,
+        tableData
+      }
+    case CLICK_MINE:
+      tableData = [...state.tableData];
+      tableData[action.row] = [...state.tableData[action.row]];
+      tableData[action.row][action.cell] = CODE.CLICKED_MINE
+      return {
+        ...state,
+        tableData,
+        halted: true
+      }
+
+    case NORMAL_CELL:
+      tableData = [...state.tableData];
+      tableData[action.row] = [...state.tableData[action.row]];
+      if(tableData[action.row][action.cell] === CODE.MINE) {
+        tableData[action.row][action.cell] = CODE.FLAG_MINE
+      } else {
+        tableData[action.row][action.cell] = CODE.FLAG;
+      }
+      return {
+        ...state,
+        tableData
+      }
+    case FLAG_CELL:
+      tableData = [...state.tableData];
+      tableData[action.row] = [...state.tableData[action.row]];
+      if(tableData[action.row][action.cell] === CODE.FLAG_MINE) {
+        tableData[action.row][action.cell] = CODE.QUESTION_MINE
+      } else {
+        tableData[action.row][action.cell] = CODE.QUESTION;
+      }
+      return {
+        ...state,
+        tableData
+      }
+    case QUESTION_CELL:
+      tableData = [...state.tableData];
+      tableData[action.row] = [...state.tableData[action.row]];
+      if(tableData[action.row][action.cell] === CODE.QUESTION_MINE) {
+        tableData[action.row][action.cell] = CODE.MINE
+      } else {
+        tableData[action.row][action.cell] = CODE.NORMAL;
+      }
+      return {
+        ...state,
+        tableData
+      }
     default:
       return state;
   }
@@ -110,12 +197,14 @@ const reducer = (state:IState, action:IAction) => {
 
 export interface ITableContext {
   tableData: number[][]
-  dispatch: React.Dispatch<IAction>
+  dispatch: React.Dispatch<IAction>,
+  halted: boolean
 }
 
 export const TableContext = createContext<ITableContext>({
   tableData: [[]],
-  dispatch: () => {}
+  dispatch: () => {},
+  halted: false
 })
 
 const Mine = () => {
@@ -124,7 +213,8 @@ const Mine = () => {
 
   const value = useMemo( () => ({
     tableData: state.tableData,
-    dispatch
+    dispatch,
+    halted: state.halted
   }), [state.tableData])
 
   return(

@@ -1,5 +1,5 @@
 import React, { useContext, useCallback } from 'react';
-import { TableContext, CODE, openCell } from '.';
+import { TableContext, CODE, openCell, normalCell, flagCell, questionCell, clickMine } from '.';
 
 interface ITd {
     item: number;
@@ -55,27 +55,50 @@ const getTdText = (code: CODE) => {
 }
 const Td = ({ item, rowIndex, cellIndex }:ITd) => {
 
-    const { dispatch } = useContext(TableContext);
+    const { dispatch, halted } = useContext(TableContext);
 
 
     const onClickCell = useCallback(() => {
+        if (halted) {
+            return;
+        }
         switch(item) {
             case CODE.NORMAL:
                 dispatch(openCell(rowIndex, cellIndex));
                 return;
             case CODE.MINE:
-                dispatch(openCell(rowIndex, cellIndex));
+                dispatch(clickMine(rowIndex, cellIndex));
                 return;
             default:
                 return;
         }
 
-    }, [item]);
+    }, [item, halted]);
 
     const onRightClick = useCallback((e) => {
         e.preventDefault();
+        if (halted) {
+            return;
+        }
 
-    },[]);
+        switch(item) {
+            case CODE.NORMAL:
+            case CODE.MINE:
+                dispatch(normalCell(rowIndex,cellIndex))
+                return;
+            case CODE.FLAG:
+            case CODE.FLAG_MINE:
+                dispatch(flagCell(rowIndex,cellIndex))
+                return;
+            case CODE.QUESTION:
+            case CODE.QUESTION_MINE:
+                dispatch(questionCell(rowIndex,cellIndex))
+                return;
+            default:
+                return;
+        }
+
+    }, [item, halted]);
     
     return(
         <td
