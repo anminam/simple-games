@@ -3,3 +3,8 @@
 
 ## 링크
  - https://anminam.github.io/simple-games
+
+
+## TODO
+ - useReducer 가 두번 호출되는현상...
+ - Mine 주변 빈칸 자동으로 열기
