@@ -5,7 +5,6 @@ import Googoodan from './Googoodan';
 import Mine from './Mine';
 
 const Main = () => {
-
     return (
         <main className="App-main">
           <Switch>

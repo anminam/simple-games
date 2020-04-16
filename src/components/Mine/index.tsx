@@ -67,14 +67,14 @@ export const OPEN_CELL = 'OPEN_CELL' as const;
 export const FLAG_CELL = 'FLAG_CELL' as const;
 export const QUESTION_CELL = 'QUESTION_CELL' as const;
 
-export const startGame = ({row, cell, mine}: IStartMine) => (
-  {
+export const startGame = ({row, cell, mine}: IStartMine) => {
+  return {
     type: START_GAME,
     row,
     cell,
     mine
   }
-)
+}
 
 export const clickMine = (row:number, cell:number) => {
   return {
@@ -126,6 +126,7 @@ const reducer = (state:IState, action:IAction) => {
 
   let tableData = null;
   switch (action.type) {
+    
     case START_GAME:
       const obj = {
         row: action.row,
@@ -237,12 +238,12 @@ export const TableContext = createContext<ITableContext>({
 
 const Mine = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  
   const value = useMemo( () => ({
     tableData: state.tableData,
     dispatch,
     halted: state.halted
-  }), [state.tableData])
+  }), [state.halted, state.tableData])
 
   return(
     <TableContext.Provider value={value}>

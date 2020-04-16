@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, memo } from 'react';
-import {clickCell, changeTurn} from './index'
+import {clickCell} from './index'
 
 export interface ITd {
     rowIndex: number

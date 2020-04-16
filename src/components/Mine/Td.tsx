@@ -73,7 +73,7 @@ const Td = ({ item, rowIndex, cellIndex }:ITd) => {
                 return;
         }
 
-    }, [item, halted]);
+    }, [halted, item, rowIndex, cellIndex]);
 
     const onRightClick = useCallback((e) => {
         e.preventDefault();
@@ -98,9 +98,9 @@ const Td = ({ item, rowIndex, cellIndex }:ITd) => {
                 return;
         }
 
-    }, [item, halted]);
+    }, [halted, item, rowIndex, cellIndex]);
     
-    return(
+    return (
         <td
             style={getTdStyle(item)}
             className="Td"

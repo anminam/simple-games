@@ -5,7 +5,7 @@ import Tr from './Tr';
 const Table = () => {
 
     const { tableData } = useContext(TableContext);
-    return(
+    return (
         <div className="Table">
             <table>
                 <thead></thead>
