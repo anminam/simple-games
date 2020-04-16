@@ -124,7 +124,7 @@ type IAction =
 
 const reducer = (state:IState, action:IAction) => {
 
-  let tableData = null;
+  let tableData:number[][] = [[]];
   switch (action.type) {
     
     case START_GAME:
@@ -140,34 +140,83 @@ const reducer = (state:IState, action:IAction) => {
       }
     case OPEN_CELL:
       tableData = [...state.tableData];
-      tableData[action.row] = [...state.tableData[action.row]];
-      
+      tableData.forEach((row, i) => {
+        tableData[i] = [...row];
+      });
 
-      let around:number[] = []
+      const checked:string[] = [];
 
-      if (tableData[action.row-1]) {
-        around = around.concat(
-          tableData[action.row - 1][action.cell - 1],
-          tableData[action.row - 1][action.cell],
-          tableData[action.row - 1][action.cell + 1],
-        )
+      const checkAround = (row: number, cell: number) => {
+        if([CODE.OPENED, CODE.FLAG_MINE, CODE.FLAG, CODE.QUESTION_MINE, CODE.QUESTION].includes(tableData[row][cell])) {
+          return;
+        }
+
+        if (row < 0 || row > tableData.length || cell < 0 || cell > tableData[0].length) {
+          return;
+        }
+
+        if (checked.includes(row + '/' + cell)) {
+          return;
+        } else {
+          checked.push((row + '/' + cell))
+        }
+
+        let around:number[] = [
+          tableData[row][cell - 1], tableData[row][cell + 1]
+        ];
+
+        if (tableData[row - 1]) {
+          around = around.concat(
+            tableData[row - 1][cell - 1],
+            tableData[row - 1][cell],
+            tableData[row - 1][cell + 1],
+          )
+        }
+
+        // around = around.concat(
+        //   tableData[row][cell - 1],
+        //   tableData[row][cell + 1]
+        // )
+
+        if (tableData[row + 1]) {
+          around = around.concat(
+            tableData[row + 1][cell - 1],
+            tableData[row + 1][cell],
+            tableData[row + 1][cell + 1],
+          )
+        }
+        const count = around.filter(v => [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v)).length;
+        tableData[row][cell] = count;
+
+        if(count === 0) {
+          if (row > -1) {
+            const near = [];
+            if( row -1 > -1 ) {
+              near.push([row -1, cell - 1]);
+              near.push([row -1, cell]);
+              near.push([row -1, cell + 1]);
+            }
+
+            near.push([row, cell - 1]);
+            near.push([row, cell + 1]);
+
+            if (row + 1 < tableData.length ){
+              near.push([row + 1, cell - 1]);
+              near.push([row + 1, cell]);
+              near.push([row + 1, cell + 1]);
+            }
+
+            near.filter( v => !!v ).forEach((n) => {
+              if(tableData[n[0]][n[1]] !== CODE.OPENED) {
+                checkAround(n[0], n[1])
+              }
+            })
+          }
+        }
+        tableData[row][cell] = count;
       }
 
-      around = around.concat(
-        tableData[action.row][action.cell - 1],
-        tableData[action.row][action.cell + 1]
-      )
-
-      if (tableData[action.row + 1]) {
-        around = around.concat(
-          tableData[action.row + 1][action.cell - 1],
-          tableData[action.row + 1][action.cell],
-          tableData[action.row + 1][action.cell + 1],
-        )
-      }
-      const count = around.filter(v => [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v)).length;
-      tableData[action.row][action.cell] = count;
-      console.log(count);
+      checkAround(action.row, action.cell);
 
       return {
         ...state,
@@ -238,7 +287,7 @@ export const TableContext = createContext<ITableContext>({
 
 const Mine = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  
+
   const value = useMemo( () => ({
     tableData: state.tableData,
     dispatch,
