@@ -207,7 +207,7 @@ const reducer = (state:IState, action:IAction) => {
             }
 
             near.filter( v => !!v ).forEach((n) => {
-              if(tableData[n[0]][n[1]] !== CODE.OPENED) {
+              if(tableData[n[0]][n[1]] !== CODE.OPENED && tableData[n[0]][n[1]] !== undefined) {
                 checkAround(n[0], n[1])
               }
             })
