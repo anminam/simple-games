@@ -47,17 +47,28 @@ const planMine = ({row, cell, mine}: IStartMine):number[][] => {
 }
 
 interface IState {
+  opendCount: number;
   tableData: number[][]
-  timer: string
+  data: {
+    row: number,
+    cell: number,
+    mine: number
+  }
+  timer: number
   result: string
   halted: boolean
-
 }
 const initialState:IState = {
   tableData: [[]],
-  timer: '',
+  data: {
+    row: 0,
+    cell: 0,
+    mine: 0
+  },
+  timer: 0,
   result: '',
-  halted: false
+  halted: false,
+  opendCount: 0
 }
 
 export const START_GAME = 'START_GAME' as const;
@@ -125,6 +136,7 @@ type IAction =
 const reducer = (state:IState, action:IAction) => {
 
   let tableData:number[][] = [[]];
+
   switch (action.type) {
     
     case START_GAME:
@@ -136,7 +148,11 @@ const reducer = (state:IState, action:IAction) => {
       return {
         ...state,
         halted: false,
-        tableData: planMine(obj)
+        data : obj,
+        tableData: planMine(obj),
+        timer: 0,
+        result: '',
+        opendCount: 0
       }
     case OPEN_CELL:
       tableData = [...state.tableData];
@@ -145,6 +161,7 @@ const reducer = (state:IState, action:IAction) => {
       });
 
       const checked:string[] = [];
+      let opendCount:number = 0;
 
       const checkAround = (row: number, cell: number) => {
         if([CODE.OPENED, CODE.FLAG_MINE, CODE.FLAG, CODE.QUESTION_MINE, CODE.QUESTION].includes(tableData[row][cell])) {
@@ -160,7 +177,8 @@ const reducer = (state:IState, action:IAction) => {
         } else {
           checked.push((row + '/' + cell))
         }
-
+        
+        opendCount += 1;
         let around:number[] = [
           tableData[row][cell - 1], tableData[row][cell + 1]
         ];
@@ -185,7 +203,7 @@ const reducer = (state:IState, action:IAction) => {
             tableData[row + 1][cell + 1],
           )
         }
-        const count = around.filter(v => [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v)).length;
+        let count = around.filter(v => [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v)).length;
         tableData[row][cell] = count;
 
         if(count === 0) {
@@ -218,9 +236,18 @@ const reducer = (state:IState, action:IAction) => {
 
       checkAround(action.row, action.cell);
 
+      let halted = false
+      let result = '';
+      if (state.data.row * state.data.cell - state.data.mine === state.opendCount + opendCount) {
+        halted = true;
+        result = "승리하셨습니다."
+      }
       return {
         ...state,
-        tableData
+        tableData,
+        opendCount: state.opendCount + opendCount,
+        halted,
+        result
       }
     case CLICK_MINE:
       tableData = [...state.tableData];
@@ -307,6 +334,7 @@ const Mine = () => {
           state.tableData.length > 0 &&
           <div>{state.halted ? "끝": "진행중.."}</div>
         }
+        <div>열린칸{state.opendCount}</div>
         
       </div>
     </TableContext.Provider>
