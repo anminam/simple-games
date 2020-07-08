@@ -73,7 +73,7 @@ const Td = ({ item, rowIndex, cellIndex }:ITd) => {
                 return;
         }
 
-    }, [halted, item, rowIndex, cellIndex]);
+    }, [halted, item, dispatch, rowIndex, cellIndex]);
 
     const onRightClick = useCallback((e) => {
         e.preventDefault();

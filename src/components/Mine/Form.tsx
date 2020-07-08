@@ -17,9 +17,15 @@ const Form = () => {
     const onChangeMine = useCallback( (e) => {
         setMine(e.target.value);
     }, []);
-    const onClickButon = useCallback(() => {
+    const onClickStartButon = useCallback(() => {
         dispatch(startGame({row,cell,mine}));
     }, [row, cell, mine]);
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if(event.key === 'Enter') {
+            onClickStartButon();
+        }
+    }
 
     useEffect(() => {
         setRow(10)
@@ -31,8 +37,8 @@ const Form = () => {
         <div className="Form">
             <input type="number" placeholder="세로" value={row} onChange={onChangeRow} />
             <input type="number" placeholder="가로" value={cell} onChange={onChangeCell} />
-            <input type="number" placeholder="지뢰" value={mine} onChange={onChangeMine} />
-            <button type="button" onClick={onClickButon}>시작</button>
+            <input type="number" placeholder="지뢰" value={mine} onChange={onChangeMine} onKeyPress={handleKeyDown}/>
+            <button type="button" onClick={onClickStartButon}>시작</button>
         </div>
     )
 }
